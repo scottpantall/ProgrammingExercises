@@ -44,7 +44,44 @@ namespace ScottPantall
 
         public static int[] FindDuplicates(int[] input)
         {
-            throw new NotImplementedException();
+            /*
+            int[] duplicates = new int[input.Length/2];
+            int duplicateAmount = 0;
+
+            for(int i = 0; i < input.Length; i++)
+            {
+                for(int j = i + 1; j < input.Length; j++)
+                {
+                    if(input[j] == input[i])
+                    {
+                        duplicates[duplicateAmount] = input[j];
+                        duplicateAmount++;
+                    }
+                }
+            }
+
+            //Array.Resize<int>(ref duplicates, duplicateAmount - 1);
+            return duplicates;
+            */
+            int duplicatesSize = 0;
+            int[] duplicates = new int[duplicatesSize];
+            
+
+            foreach (int num in input)
+            {
+                if(Array.IndexOf(input, num) != Array.LastIndexOf(input, num))
+                {
+                    if(Array.IndexOf(duplicates, num) == -1)
+                    {
+                        duplicatesSize++;
+                        Array.Resize<int>(ref duplicates, duplicatesSize);
+                        duplicates[duplicatesSize - 1] = num;
+                    }
+                    
+                }
+            }
+
+            return duplicates;
         }
 
         public static Coins MakeChange(decimal money)
