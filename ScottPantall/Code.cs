@@ -86,12 +86,55 @@ namespace ScottPantall
 
         public static Coins MakeChange(decimal money)
         {
-            throw new NotImplementedException();
+            Coins change = new Coins();
+
+            while(money != 0)
+            { 
+                if (money > 25)
+                {
+                    change.Quarters = (int)(money / 25);
+                    money %= 25;
+                } else if (money > 10)
+                {
+                    change.Dimes = (int)(money / 10);
+                    money %= 10;
+                } else if (money > 5)
+                {
+                    change.Nickels = (int)(money / 5);
+                    money %= 5;
+                } else
+                {
+                    change.Pennies = (int)(money);
+                    money = 0;
+                }
+            }
+            return change;
         }
         
         public static bool CanViewAllMovies(Movie[] movies)
         {
-            throw new NotImplementedException();
+            /* First Try...
+            Movie prevMovie = movies[0];
+            
+            for(int i = 1; i < movies.Length; i++)
+            {
+                if (prevMovie.End < movies[i].Start)
+                    return false;
+                prevMovie = movies[i];
+            }
+            */
+
+            // Second try...
+            int currentMovie = 1;
+
+            while (currentMovie < movies.Length)
+            {
+                if (DateTime.Compare(movies[currentMovie - 1].End, movies[currentMovie].Start) > 0)
+                    return false;
+                currentMovie++;
+            }
+
+            return true;
         }
 
         /// <hint>
