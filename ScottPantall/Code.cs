@@ -31,7 +31,8 @@ namespace ScottPantall
 
         public static int GetIndexOfFirstCharacterOfSubstring(string inputString, string subString)
         {
-            throw new NotImplementedException();
+            // Found the IndexOf method on MSDN https://msdn.microsoft.com/en-us/library/7cct0x33(v=vs.110).aspx
+            return inputString.IndexOf(subString);
         }
 
         public static int[] ReverseArray(int[] input)
