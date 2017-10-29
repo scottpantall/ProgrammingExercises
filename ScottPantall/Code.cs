@@ -11,7 +11,22 @@ namespace ScottPantall
     {
         public static bool IsPalindrome(string input)
         {
-            throw new NotImplementedException();
+            // Variables to interate through the string
+            int beginning = 0;
+            int end = input.Length;
+
+            //Compare characters as variables iterate through half the string
+            while(beginning < end)
+            {
+                if (input[beginning] != input[end - 1])
+                    return false;
+
+                beginning++;
+                end--;
+            }
+
+            //Only reaches this line if input is a palendrome
+            return true;
         }
 
         public static int GetIndexOfFirstCharacterOfSubstring(string inputString, string subString)
