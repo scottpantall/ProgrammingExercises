@@ -37,7 +37,9 @@ namespace ScottPantall
 
         public static int[] ReverseArray(int[] input)
         {
-            throw new NotImplementedException();
+            // Found the Reverse static method on MSDN https://msdn.microsoft.com/en-us/library/d3877932(v=vs.110).aspx
+            Array.Reverse(input);
+            return input;
         }
 
         public static int[] FindDuplicates(int[] input)
