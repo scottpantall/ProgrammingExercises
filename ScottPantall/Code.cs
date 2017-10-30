@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.RegularExpressions;
+using System.Xml;
 
 namespace ScottPantall
 {
@@ -144,7 +147,42 @@ namespace ScottPantall
         /// </hint>
         public static IEnumerable<int> GetLogEntryIdsByMessage(string xml, string message)
         {
-            throw new NotImplementedException();
+            // Used this as a guide https://msdn.microsoft.com/fr-fr/library/cc189056(v=vs.95).aspx
+            // Decided on return type using this https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/collections#BKMK_Collections
+            // Also used this https://www.dotnetperls.com/xmlreader
+
+            Queue<int> messageQueue = new Queue<int>(); // Collection of ID values to return
+            int entryID = 0;                            // Variable to hold ID values
+
+            // Create XML reader for string
+            using (XmlReader reader = XmlReader.Create(new StringReader(xml)))
+            {
+                while (reader.Read())
+                {
+                    // Only reads start elements
+                    if(reader.IsStartElement())
+                    {
+                        // Entry is detected
+                        if(reader.Name == "entry")
+                        {
+                            // Get entry ID value and store it as an integer
+                            // Thank you StackOverflow https://stackoverflow.com/questions/4734116/find-and-extract-a-number-from-a-string
+                            string result = Regex.Match(reader["id"], @"\d+").Value;
+                            entryID = Int32.Parse(result);
+
+                            // Read the next tag element that is a message element
+                            reader.ReadToFollowing("message");
+
+                            // If the message element's contents are the same as the message variable...
+                            // Add the entryID to the messageQueue
+                            if (reader.ReadElementContentAsString() == message)
+                                messageQueue.Enqueue(entryID);
+                        }
+                    }
+                }
+            }
+
+            return messageQueue;
         }
 
         public static int BinarySearchTreeNodeDistance(TreeNode tree, int node1, int node2)
