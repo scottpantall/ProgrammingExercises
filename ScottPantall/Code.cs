@@ -185,18 +185,63 @@ namespace ScottPantall
             return messageQueue;
         }
 
-        // Haha. The test does pass but the code doesn't work.
+        // I blatantly copied the code from the tutorialhorizon link
+        // Will circle back around to comment code for understanding if I have time
         public static int BinarySearchTreeNodeDistance(TreeNode tree, int node1, int node2)
         {
-            TreeNode firstNode = SearchTree(tree, node1);
-            TreeNode secondNode = SearchTree(tree, node2);
+            // Dist(n1, n2) = Dist(root, n1) + Dist(root, n2) - 2*Dist(root, lca) 
+            // http://www.geeksforgeeks.org/find-distance-between-two-nodes-of-a-binary-tree/
+            // Another resource http://algorithms.tutorialhorizon.com/find-the-distance-between-two-nodes-of-a-binary-tree/
 
-            if (!(firstNode == null || secondNode == null))
+            int node1PathLength = PathLength(tree, node1) - 1;
+            int node2PathLength = PathLength(tree, node2) - 1;
+            int lcaDistance = PathLength(tree, FindLCA(tree, node1, node2).Value) - 1;
+            return (node1PathLength + node2PathLength) - 2 * lcaDistance;
+        }
+
+        // Created for BinarySearchTreeNodeDistance method
+        private static int PathLength(TreeNode root, int n1)
+        {
+            if(root != null)
             {
-                return 3;
+                int x = 0;
+                if((root.Value == n1) || (x = PathLength(root.Left, n1)) > 0 || (x = PathLength(root.Right, n1)) > 0)
+                {
+                    return x + 1;
+                }
+                return 0;
             }
+            return 0;
+        }
 
-            return -1;
+        // Created for BinarySearchTreeNodeDistance method
+        private static TreeNode FindLCA(TreeNode root, int n1, int n2)
+        {
+            if(root != null)
+            {
+                if(root.Value == n1 || root.Value == n2)
+                {
+                    return root;
+                }
+                TreeNode left = FindLCA(root.Left, n1, n2);
+                TreeNode right = FindLCA(root.Right, n1, n2);
+
+                if(left != null && right != null)
+                {
+                    return root;
+                }
+
+                if(left != null)
+                {
+                    return left;
+                }
+
+                if(right != null)
+                {
+                    return right;
+                }
+            }
+            return null;
         }
 
         public static TreeNode MakeBinarySearchTree(List<int> values)
