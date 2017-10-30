@@ -192,12 +192,85 @@ namespace ScottPantall
 
         public static TreeNode MakeBinarySearchTree(List<int> values)
         {
-            throw new NotImplementedException();
+            // Copied this code, then added comments to show understanding of the code http://www.csharpstar.com/csharp-program-to-implement-binary-search-tree/
+            // It's been a while since I've had to implement a Binary Search Tree
+
+            TreeNode root = null; // Variable for the top TreeNode in the tree
+
+            foreach(int value in values)
+            {
+                // Make a TreeNode and put the value in it from the values list
+                TreeNode newNode = new TreeNode();
+                newNode.Value = value;
+
+                // If there are no other nodes, this node is the root node. Done!
+                if(root == null)
+                    root = newNode;
+                else
+                {
+                    TreeNode current = root;    // The TreeNode we are working off of is the root TreeNode
+                    TreeNode parent;            // A holding place for a parent TreeNode
+
+                    // Loops until a break statement - not my favorite way to loop
+                    while(true)
+                    {
+                        parent = current;   // Consider the current TreeNode to be the parent of the newNode
+                        if (newNode.Value < current.Value)
+                        {
+                            // If the newNode value is less than the current node's value
+                            // Check the Left child of the current node
+                            current = current.Left;
+
+                            // If that child is null, make the newNode that child and break
+                            // If that child is NOT null, code loops to consider that child as the new current node
+                            if (current == null)
+                            {
+                                parent.Left = newNode;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            // If the newNode value is more than the current node's value
+                            // Check the Right child of the current node
+                            current = current.Right;
+
+                            // If that child is null, make the newNode that child and break
+                            // If that child is NOT null, code loops to consider that child as the new current node
+                            if (current == null)
+                            {
+                                parent.Right = newNode;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return root;
         }
 
         public static TreeNode SearchTree(TreeNode tree, int nodeValue)
         {
-            throw new NotImplementedException();
+            TreeNode current = tree;
+            //TreeNode parent;
+
+            while (true)
+            {
+                if (nodeValue == current.Value)
+                    return current;
+                else if(nodeValue < current.Value)
+                {
+                    current = current.Left;
+                } else if(nodeValue > current.Value)
+                {
+                    current = current.Right;
+                } else
+                {
+                    current = null;
+                    return current;
+                }
+            }
         }
 
         public static int TotalGameScore(string[] scores, int numScores)
