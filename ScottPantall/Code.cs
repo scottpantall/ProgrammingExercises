@@ -32,12 +32,14 @@ namespace ScottPantall
         public static int GetIndexOfFirstCharacterOfSubstring(string inputString, string subString)
         {
             // Found the IndexOf method on MSDN https://msdn.microsoft.com/en-us/library/7cct0x33(v=vs.110).aspx
+            // I will come back around and create a solution that shows work
             return inputString.IndexOf(subString);
         }
 
         public static int[] ReverseArray(int[] input)
         {
             // Found the Reverse static method on MSDN https://msdn.microsoft.com/en-us/library/d3877932(v=vs.110).aspx
+            // I will come back around and create a solution that shows work
             Array.Reverse(input);
             return input;
         }
