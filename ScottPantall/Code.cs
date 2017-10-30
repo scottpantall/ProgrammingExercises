@@ -252,8 +252,8 @@ namespace ScottPantall
 
         public static TreeNode SearchTree(TreeNode tree, int nodeValue)
         {
+            /* First Attempt
             TreeNode current = tree;
-            //TreeNode parent;
 
             while (true)
             {
@@ -271,6 +271,19 @@ namespace ScottPantall
                     return current;
                 }
             }
+            */
+
+            // Recursion FTW! Used pseudocode from here as a guide: https://www.codeproject.com/Articles/18976/A-simple-Binary-Search-Tree-written-in-C
+            if (tree == null)
+                return null;
+
+            if (tree.Value == nodeValue)
+                return tree;
+
+            if (nodeValue < tree.Value)
+                return SearchTree(tree.Left, nodeValue);
+            else
+                return SearchTree(tree.Right, nodeValue);
         }
 
         public static int TotalGameScore(string[] scores, int numScores)
